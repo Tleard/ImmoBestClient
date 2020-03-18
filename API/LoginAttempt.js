@@ -1,5 +1,5 @@
-import AsyncStorage from 'react-native';
-
+import {AsyncStorage} from 'react-native';
+import {storeToken, getToken} from './TokenHandler';
 
 export function LoginAttempt(username, password) {
     fetch("http://192.168.1.15:8000/api/login_check", {
@@ -14,45 +14,19 @@ export function LoginAttempt(username, password) {
     })
         .then((response) => response.json())
         .then((responseText) => {
-            //AsyncStorage.setItem('token',responseText.token);
-            //alert(AsyncStorage.getItem('token'));
-            console.log(responseText)
+            if (!responseText.token)
+            {
+                //Todo: Replace by Swal equivalent
+                console.log(responseText.message)
+            } else {
+                //Success!
+                storeToken(responseText.token);
+                //console.log(getToken());
+            }
         })
         .catch((error) => {
-            console.error(error)
+            console.error(error.message)
         })
-}
-
-/*export function loginAttempt(username, password) {
-    return fetch('127.0.0.1:8000/api/login_check', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: 'admin',
-            password: 'admin1',
-        }),
-    })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            storeToken(responseJson);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}*/
-
-export function storeToken(token) {
-    let storeData = async () => {
-        try {
-            await AsyncStorage.setItem('token',token);
-            //alert(AsyncStorage.getItem('token'))
-        } catch (error) {
-            console.error(error);
-        }
-    }
 }
 
 

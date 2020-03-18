@@ -1,7 +1,8 @@
 import React from 'react'
 //import AsyncStorage from '@react-native-community/async-storage';
-import { View, TextInput, Button, StyleSheet, AsyncStorage} from 'react-native'
-import {LoginAttempt, storeToken} from '../API/LoginAttempt'
+import { View, TextInput, Button, StyleSheet} from 'react-native'
+import AsyncStorage from "react-native";
+import {LoginAttempt} from '../API/LoginAttempt'
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -19,13 +20,15 @@ class Login extends React.Component {
     }
 
     _login = async() => {
-        if (userInfo.username === this.state.username && userInfo.password === this.state.password) {
+
+        if  (this.state.username.length > 2 && this.state.password.length > 2)
+        {
             new LoginAttempt(this.state.username, this.state.password);
-            //Call AsyncStorage & Next Page
+
         } else {
-            alert('Something went wrong')
+            alert('Please enter a correct username and password')
         }
-    }
+    };
 
     render() {
         return (
