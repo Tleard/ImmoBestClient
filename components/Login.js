@@ -4,6 +4,7 @@ import { View, TextInput, Button, StyleSheet} from 'react-native'
 import AsyncStorage from "react-native";
 import {LoginAttempt} from '../API/LoginAttempt'
 import * as SecureStore from 'expo-secure-store';
+import {getToken} from "../API/TokenHandler";
 
 
 const userInfo ={username: 'admin', password: 'admin1'};
@@ -24,6 +25,7 @@ class Login extends React.Component {
         if  (this.state.username.length > 2 && this.state.password.length > 2)
         {
             new LoginAttempt(this.state.username, this.state.password);
+
 
         } else {
             alert('Please enter a correct username and password')

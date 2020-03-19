@@ -1,10 +1,13 @@
 //import AsyncStorage from 'react-native';
 import { AsyncStorage } from 'react-native';
 
+
+
+
 export async function storeToken(token) {
     try {
-        //console.log(token);
-        await AsyncStorage.setItem("userToken", JSON.stringify(token));
+        // console.log(token);
+         await AsyncStorage.setItem("userToken", JSON.stringify(token));
     } catch (error) {
         console.log("Something went wrong", error);
     }
@@ -12,15 +15,19 @@ export async function storeToken(token) {
 
 
 export function getToken() {
-    let data;
+
     try {
-        data = AsyncStorage.getItem("userToken");
-        if (data == null) {
-            console.log("Data was not found")
-        }
+        let data = AsyncStorage.getItem('userToken').then((value) => {
+            if (value !== null) {
+                return value
+            } else {
+                console.error("Cannot Get Token value");
+            }
+        });
     } catch (error) {
         console.log("Something went wrong", error);
     }
-    console.log("Token retrieved! : \n" + data);
-    return data
+    //console.log("2dn = " + data);
+
+    return "token";
 }
