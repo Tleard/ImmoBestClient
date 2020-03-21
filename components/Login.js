@@ -1,16 +1,14 @@
 import React from 'react'
-//import AsyncStorage from '@react-native-community/async-storage';
-import { View, TextInput, Button, StyleSheet} from 'react-native'
-import AsyncStorage from "react-native";
-import {LoginAttempt} from '../API/LoginAttempt'
+import { View, TextInput, Button, StyleSheet,
+    ImageBackground, Image, Dimensions, TouchableOpacity, Text} from 'react-native'
+import { FontAwesome } from '@expo/vector-icons';
+import bgImage from '../assets/PhoneWallpaperModified.png';
+import Logo from '../assets/ImmoBestLogoRound2.png';
+import {LoginAttempt} from '../API/LoginAttempt';
 import {TokenHandler} from "../API/TokenHandler";
 import {UserHandler} from "../API/UserHandler";
 
-
-
-
-const userInfo ={username: 'admin', password: 'admin1'};
-
+const {width: WIDTH} = Dimensions.get('window');
 class Login extends React.Component {
 
     constructor(props) {
@@ -45,41 +43,91 @@ class Login extends React.Component {
 
     render() {
         return (
-            <View>
-                <TextInput
-                    style={styles.textinput}
-                    placeholder='Username'
-                    onChangeText={(username) =>this.setState({username})}
-                />
-                <TextInput
-                    style={styles.textinput}
-                    placeholder='Password'
-                    onChangeText={(password) => this.setState({password})}
-                />
-                <Button
-                    style={styles.loginbutton}
-                    title='Connexion'
-                    onPress={this._login}/>
-            </View>
+            <ImageBackground source={bgImage} style={{width: '100%', height: '100%'}}>
+                <View style={{alignItems: 'center', paddingTop: 80}}>
+                    <Image source={Logo} style={{alignItems: 'center'}} />
+                </View>
+
+                <View style={{alignItems: 'center', paddingTop: 50}}>
+                    <FontAwesome name="user" size={32} color="white" style={styles.inputIcon}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Username'
+                        placeholderTextColor={'rgba(255,255,255,0.85)'}
+                        underLineColorAndroid='transparent'
+                        onChangeText={(username) =>this.setState({username})}
+                    />
+                </View>
+
+                <View style={{alignItems: 'center', paddingTop: 50}}>
+                    <FontAwesome name="lock" size={32} color="white" style={styles.inputIconPassword}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Password'
+                        placeholderTextColor={'rgba(255,255,255,0.85)'}
+                        underLineColorAndroid='transparent'
+                        secureTextEntry ={true}
+                        onChangeText={(password) => this.setState({password})}
+                    />
+
+                    <TouchableOpacity
+                        style={styles.logButton}
+                        title='Connexion'
+                        onPress={this._login}>
+                        <Text style={styles.text}>Connexion</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    textinput: {
-        marginLeft: 5,
-        marginRight: 5,
-        height: 50,
-        width: 200,
-        borderColor: '#000000',
-        borderWidth: 1,
-        paddingLeft: 5,
-        marginTop: 40
+    backgroundContainer: {
+        flex: 1,
+        width: null,
+        height: null,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    loginbutton: {
-        marginTop: 50,
-        marginRight: 40
+    textInput: {
+        width : WIDTH - 55,
+        height: 50,
+        borderRadius: 45,
+        borderColor: '#111111',
+        fontSize: 16,
+        paddingLeft: 45,
+        backgroundColor: 'rgba(57,62,70,0.7)',
+        color: 'rgba(232,243,255,0.85)',
+        marginHorizontal: 25,
+    },
+    inputIcon : {
+        position : 'absolute',
+        top: 60,
+        left: 37,
+        zIndex: 1
+    },
+    inputIconPassword : {
+        position : 'absolute',
+        top: 60,
+        left: 37,
+        zIndex: 1
+    },
+    logButton: {
+        width: WIDTH - 55,
+        height: 45,
+        borderRadius: 45,
+        marginTop: 30,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(15,114,172,0.8)'
+    },
+    text: {
+        color: 'rgba(255, 255, 255, 07)',
+        fontSize: 16,
+        textAlign: 'center'
     }
-})
+});
 
 export default Login
