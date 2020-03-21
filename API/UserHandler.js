@@ -6,10 +6,6 @@ export class UserHandler extends React.Component {
 
         static async getUserData(id, token) {
             let url = "http://192.168.1.6:8000/api/users/" + id;
-            let token_dump = 'Bearer';
-            let dump = token_dump.concat(' ', token);
-            console.log(JSON.stringify(token));
-            console.log(JSON.stringify(dump));
             return fetch(url, {
                 method: 'GET',
                 headers: new Headers({
@@ -20,7 +16,18 @@ export class UserHandler extends React.Component {
             })
                 .then((response) => response.json())
                 .then((responseText) => {
-                    console.log(responseText)
+                    function PersistUserData(responseText) {
+                        let Data = JSON.stringify(responseText);
+                        AsyncStorage.multiSet([
+                           ["username", Data.username],
+                           ["email", Data.email],
+                           ["name", Data.name],
+                           ["id", Data.id],
+                           ["role", Data.roles]
+                        ]);
+                        console.log(Data);
+                    }
+                    PersistUserData(responseText)
                 })
                 .catch((error) => {
                     console.error(error.message)
