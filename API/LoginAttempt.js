@@ -1,8 +1,13 @@
 import {AsyncStorage} from 'react-native';
-import {storeToken, getToken} from './TokenHandler';
+//import {storeToken, getToken} from './TokenHandler';
+import {TokenHandler} from "./TokenHandler";
+import Component from 'react-native';
+//import {TokenHandler} from './TokenHandler';
+import {UserHandler} from "./UserHandler";
+
 
 export function LoginAttempt(username, password) {
-    fetch("http://192.168.1.15:6000/api/login_check", {
+    return fetch("http://192.168.1.6:8000/api/login_check", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -13,14 +18,19 @@ export function LoginAttempt(username, password) {
         })
     })
         .then((response) => response.json())
-        .then((responseText) => {
+        /*.then((responseText) => {
             if (!responseText.token)
             {
                 console.log(responseText.message)
             } else {
-                storeToken(responseText.token);
+                Th = new TokenHandler();
+                Uh = new UserHandler();
+                Th.storeToken(responseText.token)
+                console.log("UserHandler =  " + Uh.getUserData(responseText.id))
+                //TokenHandler.getToken
+                //getUserData(responseText.id);
             }
-        })
+        })*/
         .catch((error) => {
             console.error(error.message)
         })
