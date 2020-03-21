@@ -3,19 +3,20 @@ import { AsyncStorage } from 'react-native';
 import {getToken} from "./TokenHandler";
 
 export class UserHandler extends React.Component {
-    state = {data: []};
 
-        async getUserData(id) {
-            let url = "http://192.168.1.6:6000/api/users/" + id;
-            console.log(url)
-
-            /*fetch(url, {
+        static async getUserData(id, token) {
+            let url = "http://192.168.1.6:8000/api/users/" + id;
+            let token_dump = 'Bearer';
+            let dump = token_dump.concat(' ', token);
+            console.log(JSON.stringify(token));
+            console.log(JSON.stringify(dump));
+            return fetch(url, {
                 method: 'GET',
-                headers: {
+                headers: new Headers({
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    Authorization: 'Bearer'+ ,
-                },
+                    'Authorization': 'Bearer '+ token,
+                }),
             })
                 .then((response) => response.json())
                 .then((responseText) => {
@@ -23,7 +24,7 @@ export class UserHandler extends React.Component {
                 })
                 .catch((error) => {
                     console.error(error.message)
-                })*/
+                })
         }
 }
 

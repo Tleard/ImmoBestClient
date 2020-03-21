@@ -3,7 +3,9 @@ import React from 'react'
 import { View, TextInput, Button, StyleSheet} from 'react-native'
 import AsyncStorage from "react-native";
 import {LoginAttempt} from '../API/LoginAttempt'
-import {getToken} from "../API/TokenHandler";
+import {TokenHandler} from "../API/TokenHandler";
+import {UserHandler} from "../API/UserHandler";
+
 
 
 
@@ -17,24 +19,28 @@ class Login extends React.Component {
             username : '',
             password : '',
             token :'',
-            id:''
+            id:'',
+            error_message:''
         }
     }
 
     _login = async() => {
-
         if  (this.state.username.length > 2 && this.state.password.length > 2)
         {
+            //Get all data from connexion and register them as state
             await LoginAttempt(this.state.username, this.state.password).then(data =>
                 this.setState({
-                    token: JSON.stringify(data.token),
-                    id : JSON.stringify(data.id)
+                    token: data.token,
+                    id : JSON.stringify(data.id),
+                    error_message: JSON.stringify(data.message)
                 })
             );
-            console.log(this.state);
-        } else {
-            alert('Please enter a correct username and password')
+        } else if (typeof this.state.error_message !== 'undefined') {
+            alert(this.state.error_message)
         }
+        //Store Token
+        await TokenHandler.storeToken(this.state.token);
+        await UserHandler.getUserData(this.state.id, this.state.token);
     };
 
     render() {
