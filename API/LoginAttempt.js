@@ -7,7 +7,7 @@ import {UserHandler} from "./UserHandler";
 
 
 export function LoginAttempt(username, password) {
-    return fetch("http://192.168.1.6:8000/api/login_check", {
+    return fetch("http://192.168.1.11:8000/api/login_check", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

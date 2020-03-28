@@ -18,15 +18,15 @@ export class TokenHandler extends React.Component {
                     console.log("responseJSON" +responseJson);
                     return responseJson;
                 })
-            //return await JSON.stringify(response.json());
         } catch (error) {
             console.log("Something went wrong : ", error);
         }
     }
 
-    static async storeToken(token) {
+    static async storeToken(token, id) {
         try {
             await AsyncStorage.setItem("userToken", JSON.stringify(token));
+            await AsyncStorage.setItem("userId", JSON.stringify(id));
         } catch (error) {
             console.log("Something went wrong", error);
         }
