@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View, Image, Dimensions} from 'react
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import {TokenHandler} from "../API/TokenHandler";
+import { FontAwesome } from '@expo/vector-icons';
 import {AsyncStorage} from 'react-native';
 import {UserHandler} from "../API/UserHandler";
 import DefaultUser from "../assets/images/default_user.png";
@@ -11,14 +11,14 @@ import DefaultUser from "../assets/images/default_user.png";
 
 
 const {width: WIDTH} = Dimensions.get('window');
-class LinksScreen extends React.Component{
+class ProfileScreen extends React.Component{
 
     constructor(props) {
         super(props)
         this.state = {
             userData : '',
             userId : '',
-            userToken: ''
+            Posts: ''
         }
     }
 
@@ -26,50 +26,24 @@ class LinksScreen extends React.Component{
         this._fetchData();
     }
 
-
-    _fetchUserInfo = async() => {
-        try{
-            let url = "http://192.168.1.11:8000/api/users/" + this.state.userId;
-            return fetch(url, {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer '+ this.state.userToken,
-                }),
-            })
-                .then((response) => response.json())
-                .then((responseText) => {
-                    console.log(responseText)
-                })
-                .catch((error) => {
-                    console.error(error.message)
-                })
-
-        } catch (e) {
-            console.error("Somenting went wrong" + e)
-        }
-    }
-
     _fetchData = async() => {
         try {
-            await AsyncStorage.multiGet(["userId", "userToken"])
+            await AsyncStorage.getItem("userToken")
                 .then((responseJson) => {
                     try{
-                        let url = "http://192.168.1.11:8000/api/users/" + responseJson[0][1];
+                        let url = "http://192.168.1.11:8000/api/advertisements/";
                         return fetch(url, {
                             method: 'GET',
                             headers: new Headers({
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json',
-                                'Authorization': 'Bearer '+ responseJson[1][1],
+                                'Authorization': 'Bearer '+ responseJson,
                             }),
                         })
                             .then((response) => response.json())
                             .then((responseText) => {
-                                AsyncStorage.multiSet([['userName', responseText.name], ['userMail', responseText.email], ['userRole', responseText.roles]]);
-                                let DataUser = {"userName" : responseText.name, "userMail" : responseText.email, "userRole" : responseText.roles};
-                                this.setState({userData: DataUser})
+                                console.log("Posts : "+ JSON.stringify(responseText));
+                                this.setState({userData: responseText})
                             })
                             .catch((error) => {
                                 console.error(error.message)
@@ -87,22 +61,42 @@ class LinksScreen extends React.Component{
 
     render() {
         return (
-            <View style={{alignItems: 'center', paddingTop: 80}}>
-                <Image source={DefaultUser} style={styles.image_logo} />
-                <Text style={styles.username}>{this.state.userData.userName}</Text>
+            <View>
+                <View style={{alignItems: 'center', paddingTop: 80}}>
+                    <View style={styles.header}>
+                        <Image source={DefaultUser} style={styles.image_logo} />
+                        <Text style={styles.username}>{this.state.userData.userName}</Text>
+                        <Text style={styles.email}>{this.state.userData.userMail}</Text>
+                    </View>
+
+                </View>
+
+                <View style={{paddingTop: 80, paddingLeft: 30}}>
+                    <Text style={{fontSize : 15}}> <FontAwesome name="comments" size={50} color="black"/> Nombre de messages envoyés : {this.state.userData.comments}</Text>
+                    <Text style={{fontSize : 15, paddingTop: 15}}> <FontAwesome name="users" size={50} color="black"/> Rôle de l'utilisateur : {this.state.userData.userRole}</Text>
+                    <Text style={{fontSize : 15, paddingTop: 15}}> <FontAwesome name="pencil-square-o" size={50} color="black"/> Nombre d'annonces postés : {this.state.userData.posts}</Text>
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    header : {
+        backgroundColor : '#605fcd'
+    },
     username: {
         fontSize: 18,
         paddingTop: 20
     },
+    email: {
+        fontSize: 15,
+        color: '#828282'
+    },
     image_logo: {
         height: 150,
         resizeMode: 'contain',
+        borderRadius: 100
     },
     container: {
         flex: 1,
@@ -132,4 +126,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LinksScreen;
+export default ProfileScreen;

@@ -2,7 +2,10 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import PostsScreen from '../screens/PostsScreen';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -20,18 +23,26 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           tabBarVisible : false,
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Déconnexion',
+          tabBarIcon: ({ focused }) => <FontAwesome focused={focused} name="power-off" size={30} color="black"/>,
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Profile',
+          tabBarIcon: ({ focused }) => <FontAwesome focused={focused} name="user" size={30} color="black"/>,
         }}
       />
+        <BottomTab.Screen
+            name="Posts"
+            component={PostsScreen}
+            options={{
+                title: 'Posts',
+                tabBarIcon: ({ focused }) => <FontAwesome focused={focused} name="key" size={30} color="black"/>,
+            }}
+        />
     </BottomTab.Navigator>
   );
 }
@@ -42,7 +53,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
+    case 'Profile':
+      return 'Profile';
   }
 }

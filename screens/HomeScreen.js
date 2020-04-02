@@ -47,7 +47,7 @@ class HomeScreen extends React.Component {
     parent.setOptions({
       tabBarVisible: false
     });
-    this.props.navigation.navigate('Links');
+    this.props.navigation.navigate('Profile');
   };
 
   render() {
