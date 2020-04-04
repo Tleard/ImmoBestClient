@@ -62,8 +62,8 @@ class ProfileScreen extends React.Component{
 
     render() {
         return (
-            <View style={{alignItems: 'center', paddingTop: 80}}>
-                <Text style={styles.username}>Text</Text>
+            <View style={{alignItems: 'center', paddingTop: 20}}>
+                <Text style={styles.username}>Annonces</Text>
                 <FlatList
                     data={this.state.postData}
                     keyExtractor={(item) => item.id.toString()}
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 18,
-        paddingTop: 20
+        paddingTop: 10
     },
     email: {
         fontSize: 15,

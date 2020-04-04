@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
         width: null,
         height: null,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative'
     },
     textInput: {
         width : WIDTH - 55,
