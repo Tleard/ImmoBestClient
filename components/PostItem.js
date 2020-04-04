@@ -5,27 +5,27 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 
 class PostItem extends React.Component {
     render() {
-        const post = this.props.post;
+        const post = this.props.postData;
         return (
-            <View style={styles.main_container}>
-                <Image
-                    style={styles.image}
-                    source={{uri: "image"}}
-                />
+            <View stype={styles.main_container}>
+                <Text>{post.title}</Text>
+            </View>
+
+            /*<View style={styles.main_container}>
+                {/!*Todo: Call Image*!/}
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
                         <Text style={styles.title_text}>{post.title}</Text>
-                        <Text style={styles.vote_text}>{post.vote_average}</Text>
+                        <Text style={styles.vote_text}>{post.price}</Text>
                     </View>
                     <View style={styles.description_container}>
-                        <Text style={styles.description_text} numberOfLines={6}>{film.overview}</Text>
-                        {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, il suffit de définir un nombre maximum de ligne */}
+                        <Text style={styles.description_text} numberOfLines={6}>{post.squareMeter}</Text>
                     </View>
                     <View style={styles.date_container}>
-                        <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
+                        <Text style={styles.date_text}>Publié le {post.published}</Text>
                     </View>
                 </View>
-            </View>
+            </View>*/
         )
     }
 }

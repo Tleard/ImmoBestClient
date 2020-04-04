@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, FlatList} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import {AsyncStorage} from 'react-native';
 import {UserHandler} from "../API/UserHandler";
 import DefaultUser from "../assets/images/default_user.png";
+import PostItem from "../components/PostItem";
 
 
 
@@ -16,7 +17,7 @@ class ProfileScreen extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            userData : '',
+            postData : [],
             userId : '',
             Posts: ''
         }
@@ -43,7 +44,7 @@ class ProfileScreen extends React.Component{
                             .then((response) => response.json())
                             .then((responseText) => {
                                 console.log("Posts : "+ JSON.stringify(responseText));
-                                this.setState({userData: responseText})
+                                this.setState({postData: responseText})
                             })
                             .catch((error) => {
                                 console.error(error.message)
@@ -61,21 +62,13 @@ class ProfileScreen extends React.Component{
 
     render() {
         return (
-            <View>
-                <View style={{alignItems: 'center', paddingTop: 80}}>
-                    <View style={styles.header}>
-                        <Image source={DefaultUser} style={styles.image_logo} />
-                        <Text style={styles.username}>{this.state.userData.userName}</Text>
-                        <Text style={styles.email}>{this.state.userData.userMail}</Text>
-                    </View>
-
-                </View>
-
-                <View style={{paddingTop: 80, paddingLeft: 30}}>
-                    <Text style={{fontSize : 15}}> <FontAwesome name="comments" size={50} color="black"/> Nombre de messages envoyés : {this.state.userData.comments}</Text>
-                    <Text style={{fontSize : 15, paddingTop: 15}}> <FontAwesome name="users" size={50} color="black"/> Rôle de l'utilisateur : {this.state.userData.userRole}</Text>
-                    <Text style={{fontSize : 15, paddingTop: 15}}> <FontAwesome name="pencil-square-o" size={50} color="black"/> Nombre d'annonces postés : {this.state.userData.posts}</Text>
-                </View>
+            <View style={{alignItems: 'center', paddingTop: 80}}>
+                <Text style={styles.username}>Text</Text>
+                <FlatList
+                    data={this.state.postData}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({item}) => <PostItem postData={item}/>}
+                />
             </View>
         );
     }
