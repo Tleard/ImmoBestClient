@@ -43,7 +43,6 @@ class ProfileScreen extends React.Component{
                         })
                             .then((response) => response.json())
                             .then((responseText) => {
-                                console.log("Posts : "+ JSON.stringify(responseText));
                                 this.setState({postData: responseText})
                             })
                             .catch((error) => {

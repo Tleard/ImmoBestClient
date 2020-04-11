@@ -1,12 +1,13 @@
 // Components/PostItem.js
 
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {StyleSheet, View, Text, Image, Dimensions} from 'react-native'
 import Moment from 'moment'
 import defaultImage from '../assets/images/Hobbit_500x500.jpg'
 
 const {width: WIDTH} = Dimensions.get('window');
-class PostItem extends React.Component {
+class PostItem extends PureComponent {
+
     render() {
         const post = this.props.postData;
         Moment.locale('fr');
@@ -35,7 +36,8 @@ class PostItem extends React.Component {
                         <Text style={styles.vote_text}>{post.price} €</Text>
                     </View>
                     <View style={styles.description_container}>
-                        <Text style={styles.description_text} numberOfLines={6}>{post.squareMeter}</Text>
+                        <Text style={styles.description_text} numberOfLines={6}>{post.squareMeter} m², {post.rooms} piéces</Text>
+                        <Text style={styles.content_text} numberOfLines={6}>{post.content}</Text>
                     </View>
                     <View style={styles.date_container}>
                         <Text style={styles.date_text}>Publié le {Moment(post.published).format('d/M')}</Text>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         flex : 1,
         borderColor : '#000000',
-        width : WIDTH - 55
+        width : WIDTH - 15,
     },
     image: {
         width: 100,
@@ -66,25 +68,31 @@ const styles = StyleSheet.create({
     },
     header_container: {
         flex: 3,
-        flexDirection: 'row'
     },
     title_text: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 25,
         flex: 1,
         flexWrap: 'wrap',
         paddingRight: 5
     },
     vote_text: {
         fontWeight: 'bold',
-        fontSize: 26,
-        color: '#666666'
+        fontSize: 20,
+        color: '#000000',
+        flex : 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     },
     description_container: {
         flex: 7
     },
     description_text: {
         fontStyle: 'italic',
+        color: '#666666',
+        fontSize: 15
+    },
+    content_text: {
         color: '#666666'
     },
     date_container: {
