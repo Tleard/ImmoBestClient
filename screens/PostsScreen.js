@@ -48,7 +48,6 @@ class ProfileScreen extends React.Component{
                             .catch((error) => {
                                 console.error(error.message)
                             })
-
                     } catch (e) {
                         console.error("Something went wrong" + e)
                     }
@@ -59,6 +58,10 @@ class ProfileScreen extends React.Component{
         }
     }
 
+    _DisplayDetails = (PostId) => {
+        console.log("Display post with id" + PostId);
+    }
+
     render() {
         return (
             <View style={{alignItems: 'center', paddingTop: 20}}>
@@ -66,7 +69,7 @@ class ProfileScreen extends React.Component{
                 <FlatList
                     data={this.state.postData}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => <PostItem postData={item}/>}
+                    renderItem={({item}) => <PostItem postData={item} DisplayDetails={this._DisplayDetails}/>}
                 />
             </View>
         );

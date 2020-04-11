@@ -1,7 +1,7 @@
 // Components/PostItem.js
 
 import React, { PureComponent } from 'react'
-import {StyleSheet, View, Text, Image, Dimensions} from 'react-native'
+import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from 'react-native'
 import Moment from 'moment'
 import defaultImage from '../assets/images/Hobbit_500x500.jpg'
 
@@ -10,6 +10,7 @@ class PostItem extends PureComponent {
 
     render() {
         const post = this.props.postData;
+        const {DisplayDetails} = this.props;
         Moment.locale('fr');
         return (
             /*<View style={styles.content_container}>
@@ -25,14 +26,15 @@ class PostItem extends PureComponent {
                 </View>
             </View>*/
 
-            <View style={styles.main_container}>
+            <TouchableOpacity onPress={() => DisplayDetails(post.id)}
+                style={styles.main_container}>
                 <Image
                     style={styles.image}
                     source={defaultImage}
                 />
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
-                        <Text style={styles.title_text}>{post.title}</Text>
+                        <Text style={styles.title_text}>{post.title} {post.id}</Text>
                         <Text style={styles.vote_text}>{post.price} €</Text>
                     </View>
                     <View style={styles.description_container}>
@@ -43,7 +45,7 @@ class PostItem extends PureComponent {
                         <Text style={styles.date_text}>Publié le {Moment(post.published).format('d/M')}</Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
