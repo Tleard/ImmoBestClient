@@ -1,6 +1,9 @@
 import * as React from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, AsyncStorage} from 'react-native';
 import ProfileScreen from "./ProfileScreen";
+import bgImage from '../assets/PhoneWallpaperModified.png';
+import Logo from "../assets/ImmoBestLogoRound2.png";
+
 
 const {width: WIDTH} = Dimensions.get('window');
 class DetailsScreens extends React.Component {
@@ -45,7 +48,8 @@ class DetailsScreens extends React.Component {
                                 })
                                     .then((response) => response.json() )
                                     .then(data => {
-                                        console.log(data)
+                                        let image_uri = "http://192.168.1.11:8000/images/" + data.url;
+                                        this.setState({image: image_uri})
                                     })
                             })
                             .catch((error) => {
@@ -66,8 +70,13 @@ class DetailsScreens extends React.Component {
         const image = this.state.image
         return(
             <View>
-                <Image
-                    source={{ uri: this.state.image }}/>
+                <View style={{alignItems: 'center', paddingTop: 80}}>
+                    <Image
+                        style={{ width: WIDTH - 10, height: WIDTH }}
+                        source={{ uri: image }}
+                    />
+                </View>
+                <Text style={styles.title_text}>{image}</Text>
                 <Text style={styles.title_text}>{post.title}</Text>
             </View>
         )
