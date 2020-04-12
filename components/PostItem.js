@@ -10,6 +10,7 @@ class PostItem extends PureComponent {
 
     render() {
         const post = this.props.postData;
+        const image = "http://192.168.1.11:8000/images/" + this.props.postData.images[0].url;
         const {DisplayDetails} = this.props;
         Moment.locale('fr');
         return (
@@ -17,11 +18,11 @@ class PostItem extends PureComponent {
                 style={styles.main_container}>
                 <Image
                     style={styles.image}
-                    source={defaultImage}
+                    source={{uri : image}}
                 />
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
-                        <Text style={styles.title_text}>{post.title} {post.id}</Text>
+                        <Text style={styles.title_text}>{post.title} {post.images.url}</Text>
                         <Text style={styles.vote_text}>{post.price} €</Text>
                     </View>
                     <View style={styles.description_container}>

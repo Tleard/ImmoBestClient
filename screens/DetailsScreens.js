@@ -38,19 +38,7 @@ class DetailsScreens extends React.Component {
                             .then((response) => response.json())
                             .then((responseText) => {
                                 this.setState({postData: responseText})
-                                return fetch("http://192.168.1.11:8000" + responseText.images, {
-                                    method: 'GET',
-                                    headers: new Headers({
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json',
-                                        'Authorization':'Bearer ' + responseJson
-                                    })
-                                })
-                                    .then((response) => response.json() )
-                                    .then(data => {
-                                        let image_uri = "http://192.168.1.11:8000/images/" + data.url;
-                                        this.setState({image: image_uri})
-                                    })
+                                this.setState({image: responseText.images[0].url})
                             })
                             .catch((error) => {
                                 console.error(error.message)
@@ -67,7 +55,8 @@ class DetailsScreens extends React.Component {
 
     render() {
         const post = this.state.postData
-        const image = this.state.image
+        const image = "http://192.168.1.11:8000/images/" + this.state.image;
+
         return(
             <View>
                 <View style={{alignItems: 'center', paddingTop: 10}}>

@@ -9,6 +9,7 @@ import DetailsScreens  from '../ImmoBest/screens/DetailsScreens';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+import CreateScreen from "./screens/CreateScreen";
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen name="Details" component={DetailsScreens} />
+            <Stack.Screen name="Create" component={CreateScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

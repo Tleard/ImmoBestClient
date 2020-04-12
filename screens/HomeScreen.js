@@ -12,6 +12,7 @@ import { MonoText } from '../components/StyledText';
 import { FontAwesome } from '@expo/vector-icons';
 import bgImage from '../assets/PhoneWallpaperModified.png';
 import Logo from '../assets/ImmoBestLogoRound2.png';
+import CreateScreen from "./CreateScreen";
 
 const {width: WIDTH} = Dimensions.get('window');
 class HomeScreen extends React.Component {
@@ -50,6 +51,11 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('Profile');
   };
 
+  _Create = async() =>
+  {
+    this.props.navigation.navigate('Create')
+  }
+
   render() {
     return (
         <ImageBackground source={bgImage} style={{width: '100%', height: '100%'}}>
@@ -86,6 +92,13 @@ class HomeScreen extends React.Component {
               <Text style={styles.text}>Connexion</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity
+                style={styles.createButton}
+                title='Créer un compte'
+                onPress={this._Create}>
+              <Text style={styles.text}>Créer un compte</Text>
+            </TouchableOpacity>
+
           </View>
 
         </ImageBackground>
@@ -96,39 +109,6 @@ class HomeScreen extends React.Component {
 HomeScreen.navigationOptions = {
   headerShown: false,
 };
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -254,6 +234,14 @@ const styles = StyleSheet.create({
     marginTop: 30,
     justifyContent: 'center',
     backgroundColor: 'rgba(15,114,172,0.8)'
+  },
+  createButton: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 45,
+    marginTop: 30,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(7,50,75,0.8)'
   },
   text: {
     color: 'rgba(255, 255, 255, 07)',
