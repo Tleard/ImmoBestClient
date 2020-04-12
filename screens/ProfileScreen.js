@@ -67,6 +67,7 @@ class ProfileScreen extends React.Component{
                         })
                             .then((response) => response.json())
                             .then((responseText) => {
+                                console.log("Console log : " + JSON.stringify(responseText))
                                 AsyncStorage.multiSet([['userName', responseText.name], ['userMail', responseText.email], ['userRole', responseText.roles]]);
                                 let DataUser = {"userName" : responseText.name, "userMail" : responseText.email, "userRole" : responseText.roles, "comments" : responseText.comments.length, "posts" : responseText.posts.length};
                                 this.setState({userData: DataUser})

@@ -1,6 +1,9 @@
 import * as React from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, AsyncStorage} from 'react-native';
-import ProfileScreen from "./ProfileScreen";
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons} from '@expo/vector-icons';
+import { FontAwesome5} from '@expo/vector-icons';
+
 
 const {width: WIDTH} = Dimensions.get('window');
 class DetailsScreens extends React.Component {
@@ -45,7 +48,8 @@ class DetailsScreens extends React.Component {
                                 })
                                     .then((response) => response.json() )
                                     .then(data => {
-                                        console.log(data)
+                                        let image_uri = "http://192.168.1.11:8000/images/" + data.url;
+                                        this.setState({image: image_uri})
                                     })
                             })
                             .catch((error) => {
@@ -66,9 +70,45 @@ class DetailsScreens extends React.Component {
         const image = this.state.image
         return(
             <View>
-                <Image
-                    source={{ uri: this.state.image }}/>
-                <Text style={styles.title_text}>{post.title}</Text>
+                <View style={{alignItems: 'center', paddingTop: 10}}>
+                    <Text style={styles.title_text}>{post.title}</Text>
+                    <Image
+                        style={{ width: WIDTH - 10, height: WIDTH }}
+                        source={{ uri: image }}
+                    />
+                </View>
+                <View style={{flexDirection: 'row'}}>
+
+                    <View style = {{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'stretch'}} >
+                        <MaterialCommunityIcons name="door" size={30} color="black"/>
+                        <Text style={{fontSize : 20}}>{post.rooms} piéces </Text>
+                    </View>
+
+                    <View style = {{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'stretch'}} >
+                        <FontAwesome5 name="ruler-combined" size={30} color="black"/>
+                        <Text style={{fontSize : 20}}>{post.squareMeter} m² </Text>
+                    </View>
+                    <View style = {{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'stretch'}} >
+                        <FontAwesome5 name="euro-sign" size={30} color="black"/>
+                        <Text style={{fontSize : 20}}>
+                            {post.price}
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={{backgroundColor: '#e3e3e3', marginTop: WIDTH - 350}}>
+                    <View style={{paddingRight : 15,flexDirection: 'row'}}>
+                        <FontAwesome5 name="home" size={30} color="black"/>
+                        <Text style={{fontSize: 18}}>
+                            À propos de ce bien {post.rooms} piéces à {post.city}
+                        </Text>
+                    </View>
+                    <View style={{paddingLeft: 15, paddingTop: 15}}>
+                        <Text style={{fontSize :18}}>
+                            {post.content}
+                        </Text>
+                    </View>
+                </View>
             </View>
         )
     }
