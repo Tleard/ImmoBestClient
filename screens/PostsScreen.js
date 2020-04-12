@@ -59,7 +59,7 @@ class ProfileScreen extends React.Component{
     }
 
     _DisplayDetails = (PostId) => {
-        console.log("Display post with id" + PostId);
+        this.props.navigation.navigate("Details", {PostId: PostId});
     }
 
     render() {
