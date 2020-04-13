@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity,
-    View, TextInput, Button, ImageBackground, Dimensions } from 'react-native';
+import {
+    Image, Platform, StyleSheet, Text, TouchableOpacity,
+    View, TextInput, Button, ImageBackground, Dimensions, AsyncStorage
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import {LoginAttempt} from '../API/LoginAttempt';
@@ -57,8 +59,48 @@ class CreateScreen extends React.Component {
 
             console.log(regExp.test(this.state.email));
             alert(error);
+        } else {
+            this._fetchData();
         }
     };
+
+    _fetchData = async() => {
+        try {
+            await AsyncStorage.getItem("userToken")
+                .then((responseJson) => {
+                    try {
+                        let url = "http://192.168.1.11:8000/api/users";
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: new Headers({
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Authorization': 'Bearer ' + responseJson,
+                            }),
+                            body: JSON.stringify({
+                                username: this.state.username,
+                                password: this.state.password,
+                                retypedPassword: this.state.password_confirm,
+                                email: this.state.email,
+                                name: this.state.name,
+                            })
+                        })
+                            .then((response) => response.json())
+                            .then((responseText) => {
+                                console.log(responseText)
+                            })
+                            .catch((error) => {
+                                console.error(error.message)
+                            })
+
+                    } catch (e) {
+                        console.error("Something went wrong" + e)
+                    }
+                })
+        } catch (e) {
+            console.error("Something went wrong" + e)
+        }
+    }
 
 
 
