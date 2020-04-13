@@ -21,6 +21,7 @@ import bgImage from "../assets/images/BackgroundTest.png";
 
 
 
+
 const {width: WIDTH} = Dimensions.get('window');
 class createAdvertisementScreen extends React.Component{
 
@@ -30,9 +31,9 @@ class createAdvertisementScreen extends React.Component{
             title : '',
             content : '',
             slug :'',
-            rooms :'',
-            square_meter : '',
-            price : '',
+            rooms : 0,
+            square_meter : 0,
+            price : 0,
             address : '',
             city : '',
             token :'',
@@ -67,10 +68,9 @@ class createAdvertisementScreen extends React.Component{
             if (this.state.city < 2) {
                 error += "- Ville \n"
             }
-
             alert(error);
         } else {
-            //this._fetchData();
+            this._fetchData();
         }
     };
 
@@ -79,7 +79,7 @@ class createAdvertisementScreen extends React.Component{
             await AsyncStorage.getItem("userToken")
                 .then((responseJson) => {
                     try {
-                        let url = "http://192.168.1.11:8000/api/users";
+                        let url = "http://192.168.1.11:8000/api/advertisements";
                         return fetch(url, {
                             method: 'POST',
                             headers: new Headers({
@@ -88,11 +88,13 @@ class createAdvertisementScreen extends React.Component{
                                 'Authorization': 'Bearer ' + responseJson,
                             }),
                             body: JSON.stringify({
-                                username: this.state.username,
-                                password: this.state.password,
-                                retypedPassword: this.state.password_confirm,
-                                email: this.state.email,
-                                name: this.state.name,
+                                title: this.state.title,
+                                content: this.state.content,
+                                rooms: parseInt(this.state.rooms),
+                                squareMeter: parseInt(this.state.square_meter),
+                                price: parseInt(this.state.price),
+                                address: this.state.address,
+                                city: this.state.city
                             })
                         })
                             .then((response) => response.json())
@@ -115,11 +117,11 @@ class createAdvertisementScreen extends React.Component{
     render() {
         return (
             <ImageBackground source={bgImage} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
-                <View style={{alignItems: 'center', paddingTop: 25}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <Text style={{fontSize : 25}}>Créer une annonce ImmoBest</Text>
                 </View>
-                <View style={{alignItems: 'center', paddingTop: 25}}>
-                    <MaterialIcons name="title" size={28} color="white" style={styles.inputIcon}/>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
+                    <MaterialIcons name="title" size={28} color="white" style={styles.inputIconTitle}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Titre de l'annonce"
@@ -128,8 +130,18 @@ class createAdvertisementScreen extends React.Component{
                         onChangeText={(title) =>this.setState({title})}
                     />
                 </View>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
+                    <MaterialIcons name="title" size={28} color="white" style={styles.inputIconContent}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Contenue de l'annonce"
+                        placeholderTextColor={'rgba(255,255,255,0.85)'}
+                        underLineColorAndroid='transparent'
+                        onChangeText={(content) =>this.setState({content})}
+                    />
+                </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <FontAwesome5 name="street-view" size={32} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
@@ -140,7 +152,7 @@ class createAdvertisementScreen extends React.Component{
                     />
                 </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <FontAwesome5 name="city" size={22} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
@@ -151,7 +163,7 @@ class createAdvertisementScreen extends React.Component{
                     />
                 </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <MaterialCommunityIcons name="door" size={30} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
@@ -163,7 +175,7 @@ class createAdvertisementScreen extends React.Component{
                     />
                 </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <FontAwesome5 name="euro-sign" size={26} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
@@ -175,7 +187,7 @@ class createAdvertisementScreen extends React.Component{
                     />
                 </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 15}}>
                     <FontAwesome5 name="ruler-combined" size={26} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
@@ -187,7 +199,7 @@ class createAdvertisementScreen extends React.Component{
                     />
                 </View>
 
-                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <View style={{alignItems: 'center', paddingTop: 5}}>
                     <TouchableOpacity
                         title='Créer le compte'
                         onPress={this._login}>
@@ -323,6 +335,18 @@ const styles = StyleSheet.create({
     inputIcon : {
         position : 'absolute',
         top: 40,
+        left: 37,
+        zIndex: 1
+    },
+    inputIconTitle : {
+        position : 'absolute',
+        top: 30,
+        left: 37,
+        zIndex: 1
+    },
+    inputIconContent : {
+        position : 'absolute',
+        top: 30,
         left: 37,
         zIndex: 1
     },
