@@ -10,7 +10,7 @@ import {
     TextInput,
     Platform
 } from 'react-native';
-import {FontAwesome5, Foundation, Ionicons} from '@expo/vector-icons';
+import {FontAwesome5, Foundation, Ionicons, MaterialIcons, MaterialCommunityIcons} from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
@@ -27,11 +27,14 @@ class createAdvertisementScreen extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            username : '',
-            password : '',
-            password_confirm :'',
-            email :'',
-            name : '',
+            title : '',
+            content : '',
+            slug :'',
+            rooms :'',
+            square_meter : '',
+            price : '',
+            address : '',
+            city : '',
             token :'',
             id:'',
             error_message:'',
@@ -41,33 +44,33 @@ class createAdvertisementScreen extends React.Component{
     _login = async() => {
 
         let error = "";
-        if (this.state.username < 2 || this.state.password < 2 || this.state.password_confirm < 2 || this.state.email < 2 || this.state.name < 2) {
-            const regExp = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+        if (this.state.title < 2 || this.state.content < 2 || this.state.rooms < 2 || this.state.square_meter < 2 || this.state.price < 2 || this.state.address < 2 || this.state.city < 2) {
             let error = "Veuillez renseigner les champ suivants : \n";
-            if (this.state.username < 2) {
-                error += "- Pseudo \n"
+            if (this.state.title < 2) {
+                error += "- Titre \n"
             }
-            if (this.state.password < 2) {
-                error += "- Mot de passe \n"
+            if (this.state.content < 2) {
+                error += "- Contenue \n"
             }
-            if (this.state.password_confirm < 2) {
-                error += "- Confirmation du mot de passe \n"
+            if (this.state.square_meter < 2) {
+                error += "- Métres carrées \n"
             }
-            if (this.state.email < 2) {
-                error += "- Adresse Mail \n"
+            if (this.state.price < 2) {
+                error += "- Prix \n"
             }
-            if (regExp.test(this.state.email) === false)
-            {
-                error += "- Une Adresse Mail valide \n"
+            if (this.state.rooms < 2) {
+                error += "- Piéces \n"
             }
-            if (this.state.name < 2) {
-                error += "- Nom & Prénom \n"
+            if (this.state.address < 2) {
+                error += "- Adresse \n"
+            }
+            if (this.state.city < 2) {
+                error += "- Ville \n"
             }
 
-            console.log(regExp.test(this.state.email));
             alert(error);
         } else {
-            this._fetchData();
+            //this._fetchData();
         }
     };
 
@@ -109,113 +112,93 @@ class createAdvertisementScreen extends React.Component{
         }
     }
 
-
-
-
-
-
-    /*if  (this.state.username.length > 2 && this.state.password.length > 2 &&)
-    {
-        //Get all data from connexion and register them as state
-        await LoginAttempt(this.state.username, this.state.password).then(data =>
-            this.setState({
-                token: data.token,
-                id : JSON.stringify(data.id),
-                error_message: JSON.stringify(data.message)
-            })
-        );
-    } else if (typeof this.state.error_message !== 'undefined') {
-        alert(this.state.error_message)
-    }*/
-    //Store Token
-    /*await TokenHandler.storeToken(this.state.token, this.state.id);
-    const parent = this.props.navigation.dangerouslyGetParent();
-    parent.setOptions({
-        tabBarVisible: false
-    });
-    this.props.navigation.navigate('Profile');*/
-
     render() {
         return (
             <ImageBackground source={bgImage} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
                 <View style={{alignItems: 'center', paddingTop: 25}}>
-                    <Text style={{fontSize : 25}}>Créer un Compte ImmoBest</Text>
+                    <Text style={{fontSize : 25}}>Créer une annonce ImmoBest</Text>
                 </View>
                 <View style={{alignItems: 'center', paddingTop: 25}}>
-                    <FontAwesome5 name="user-alt" size={28} color="white" style={styles.inputIcon}/>
+                    <MaterialIcons name="title" size={28} color="white" style={styles.inputIcon}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Titre de l'annonce"
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(username) =>this.setState({username})}
+                        onChangeText={(title) =>this.setState({title})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <Foundation name="at-sign" size={32} color="white" style={styles.inputIconPassword}/>
+                    <FontAwesome5 name="street-view" size={32} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder='Numéro et Rue'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(address) => this.setState({address})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <Foundation name="at-sign" size={32} color="white" style={styles.inputIconPassword}/>
+                    <FontAwesome5 name="city" size={22} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder='Ville'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(city) => this.setState({city})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
+                    <MaterialCommunityIcons name="door" size={30} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Piéces du bien'
+                        placeholder='Nombre de piéces du bien'
                         keyboardType='number-pad'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({name})}
+                        onChangeText={(rooms) => this.setState({rooms})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
+                    <FontAwesome5 name="euro-sign" size={26} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder='Prix'
                         keyboardType='number-pad'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({name})}
+                        onChangeText={(price) => this.setState({price})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
+                    <FontAwesome5 name="ruler-combined" size={26} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
                         placeholder='Métres carées'
                         keyboardType='number-pad'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({name})}
+                        onChangeText={(square_meter) => this.setState({square_meter})}
                     />
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
                     <TouchableOpacity
-                        style={styles.logButton}
                         title='Créer le compte'
                         onPress={this._login}>
-                        <Text style={styles.text}>Ajouter une photo</Text>
+                        <View style={{alignItems: 'center'}}>
+                            <FontAwesome5 name="camera-retro" size={60} color="black"/>
+                        </View>
+
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={{alignItems: 'center'}}> Ajouter une Photo </Text>
+                        </View>
+
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.logButton}
