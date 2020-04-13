@@ -87,7 +87,13 @@ class CreateScreen extends React.Component {
                         })
                             .then((response) => response.json())
                             .then((responseText) => {
-                                console.log(responseText)
+                                if (typeof(responseText) != "object")
+                                {
+                                    alert(responseText)
+                                } else {
+                                    alert("Votre utilisateur a bien été créer.")
+                                }
+                                this.props.navigation.navigate('Home')
                             })
                             .catch((error) => {
                                 console.error(error.message)
@@ -101,7 +107,6 @@ class CreateScreen extends React.Component {
             console.error("Something went wrong" + e)
         }
     }
-
     render() {
         return (
             <ImageBackground source={bgImage} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
@@ -112,7 +117,7 @@ class CreateScreen extends React.Component {
                     <FontAwesome5 name="user-alt" size={28} color="white" style={styles.inputIcon}/>
                     <TextInput
                         style={styles.textInput}
-                        placeholder="Titre de l'annonce"
+                        placeholder='Pseudo'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
                         onChangeText={(username) =>this.setState({username})}
@@ -123,18 +128,7 @@ class CreateScreen extends React.Component {
                     <Foundation name="at-sign" size={32} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Numéro et Rue'
-                        placeholderTextColor={'rgba(255,255,255,0.85)'}
-                        underLineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
-                    />
-                </View>
-
-                <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <Foundation name="at-sign" size={32} color="white" style={styles.inputIconPassword}/>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Ville'
+                        placeholder='Adresse email'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
                         onChangeText={(email) => this.setState({email})}
@@ -145,32 +139,7 @@ class CreateScreen extends React.Component {
                     <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Piéces du bien'
-                        keyboardType='number-pad'
-                        placeholderTextColor={'rgba(255,255,255,0.85)'}
-                        underLineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({name})}
-                    />
-                </View>
-
-                <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Prix'
-                        keyboardType='number-pad'
-                        placeholderTextColor={'rgba(255,255,255,0.85)'}
-                        underLineColorAndroid='transparent'
-                        onChangeText={(name) => this.setState({name})}
-                    />
-                </View>
-
-                <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome5 name="user-check" size={26} color="white" style={styles.inputIconPassword}/>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Métres carées'
-                        keyboardType='number-pad'
+                        placeholder='Prénom & Nom'
                         placeholderTextColor={'rgba(255,255,255,0.85)'}
                         underLineColorAndroid='transparent'
                         onChangeText={(name) => this.setState({name})}
@@ -187,6 +156,18 @@ class CreateScreen extends React.Component {
                         secureTextEntry ={true}
                         onChangeText={(password) => this.setState({password})}
                     />
+
+                    <View style={{alignItems: 'center', paddingTop: 20}}>
+                        <FontAwesome name="unlock-alt" size={32} color="white" style={styles.inputIconPassword}/>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Confirmer le mot de passe'
+                            placeholderTextColor={'rgba(255,255,255,0.85)'}
+                            underLineColorAndroid='transparent'
+                            secureTextEntry ={true}
+                            onChangeText={(password_confirm) => this.setState({password_confirm})}
+                        />
+                    </View>
 
                     <TouchableOpacity
                         style={styles.logButton}

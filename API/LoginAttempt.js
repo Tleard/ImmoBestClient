@@ -18,19 +18,6 @@ export function LoginAttempt(username, password) {
         })
     })
         .then((response) => response.json())
-        /*.then((responseText) => {
-            if (!responseText.token)
-            {
-                console.log(responseText.message)
-            } else {
-                Th = new TokenHandler();
-                Uh = new UserHandler();
-                Th.storeToken(responseText.token)
-                console.log("UserHandler =  " + Uh.getUserData(responseText.id))
-                //TokenHandler.getToken
-                //getUserData(responseText.id);
-            }
-        })*/
         .catch((error) => {
             console.error(error.message)
         })

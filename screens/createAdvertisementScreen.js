@@ -99,7 +99,12 @@ class createAdvertisementScreen extends React.Component{
                         })
                             .then((response) => response.json())
                             .then((responseText) => {
-                                console.log(responseText)
+                                if (typeof(responseText) != "object")
+                                {
+                                    alert(responseText)
+                                } else {
+                                    alert("Votre annonce a bien été créer.")
+                                }
                             })
                             .catch((error) => {
                                 console.error(error.message)
