@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import PostsScreen from '../screens/PostsScreen';
 import { FontAwesome } from '@expo/vector-icons';
+import createAdvertisementScreen from "../screens/createAdvertisementScreen";
 
 
 const BottomTab = createBottomTabNavigator();
@@ -41,6 +42,14 @@ export default function BottomTabNavigator({ navigation, route }) {
             options={{
                 title: 'Posts',
                 tabBarIcon: ({ focused }) => <FontAwesome focused={focused} name="key" size={30} color="black"/>,
+            }}
+        />
+        <BottomTab.Screen
+            name="createAdvertisement"
+            component={createAdvertisementScreen}
+            options={{
+                title: 'Créer une Annonce',
+                tabBarIcon: ({ focused }) => <FontAwesome focused={focused} name="pencil-square-o" size={30} color="black"/>,
             }}
         />
     </BottomTab.Navigator>

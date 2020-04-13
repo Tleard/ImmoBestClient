@@ -43,7 +43,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <ImageBackground source={bgImage} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={bgImage} style=style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
                 <View style={{alignItems: 'center', paddingTop: 80}}>
                     <Image source={Logo} style={{alignItems: 'center'}} />
                 </View>

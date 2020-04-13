@@ -1,21 +1,28 @@
 import * as React from 'react';
 import {
-    Image, Platform, StyleSheet, Text, TouchableOpacity,
-    View, TextInput, Button, ImageBackground, Dimensions, AsyncStorage
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Image,
+    Dimensions,
+    ImageBackground,
+    TextInput,
+    Platform
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {FontAwesome5, Foundation, Ionicons} from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import {LoginAttempt} from '../API/LoginAttempt';
-import {TokenHandler} from "../API/TokenHandler";
+import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { FontAwesome } from '@expo/vector-icons';
+import {AsyncStorage} from 'react-native';
 import {UserHandler} from "../API/UserHandler";
-import BottomTabNavigator from "../navigation/BottomTabNavigator";
+import DefaultUser from "../assets/images/default_user.png";
+import bgImage from "../assets/images/BackgroundTest.png";
 
-import { MonoText } from '../components/StyledText';
-import { FontAwesome, FontAwesome5, Foundation } from '@expo/vector-icons';
-import bgImage from '../assets/images/BackgroundTest.png';
+
 
 const {width: WIDTH} = Dimensions.get('window');
-class CreateScreen extends React.Component {
+class createAdvertisementScreen extends React.Component{
 
     constructor(props) {
         super(props)
@@ -102,6 +109,32 @@ class CreateScreen extends React.Component {
         }
     }
 
+
+
+
+
+
+    /*if  (this.state.username.length > 2 && this.state.password.length > 2 &&)
+    {
+        //Get all data from connexion and register them as state
+        await LoginAttempt(this.state.username, this.state.password).then(data =>
+            this.setState({
+                token: data.token,
+                id : JSON.stringify(data.id),
+                error_message: JSON.stringify(data.message)
+            })
+        );
+    } else if (typeof this.state.error_message !== 'undefined') {
+        alert(this.state.error_message)
+    }*/
+    //Store Token
+    /*await TokenHandler.storeToken(this.state.token, this.state.id);
+    const parent = this.props.navigation.dangerouslyGetParent();
+    parent.setOptions({
+        tabBarVisible: false
+    });
+    this.props.navigation.navigate('Profile');*/
+
     render() {
         return (
             <ImageBackground source={bgImage} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
@@ -178,21 +211,17 @@ class CreateScreen extends React.Component {
                 </View>
 
                 <View style={{alignItems: 'center', paddingTop: 20}}>
-                    <FontAwesome name="lock" size={32} color="white" style={styles.inputIconPassword}/>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Mot de passe'
-                        placeholderTextColor={'rgba(255,255,255,0.85)'}
-                        underLineColorAndroid='transparent'
-                        secureTextEntry ={true}
-                        onChangeText={(password) => this.setState({password})}
-                    />
-
                     <TouchableOpacity
                         style={styles.logButton}
                         title='Créer le compte'
                         onPress={this._login}>
-                        <Text style={styles.text}>Créer le compte</Text>
+                        <Text style={styles.text}>Ajouter une photo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.logButton}
+                        title='Créer le compte'
+                        onPress={this._login}>
+                        <Text style={styles.text}>Créer l'annonce</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -342,5 +371,4 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
-
-export default CreateScreen;
+export default createAdvertisementScreen;
