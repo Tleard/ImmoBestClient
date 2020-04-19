@@ -30,7 +30,7 @@ class PostItem extends PureComponent {
                         <Text style={styles.content_text} numberOfLines={6}>{post.content}</Text>
                     </View>
                     <View style={styles.date_container}>
-                        <Text style={styles.date_text}>Publié le {Moment(post.published).format('d/M')}</Text>
+                        <Text style={styles.date_text}>Publié le {Moment(post.published).format('d/M/YYYY')}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 100,
-        height: 100,
+        height: 120,
         margin: 5,
         paddingRight: WIDTH -20,
         backgroundColor: 'gray',
